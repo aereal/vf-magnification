@@ -1,0 +1,80 @@
+<!doctype>
+<html data-ng-app="FinderApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <title>VF像倍率計算機</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <h1><abbr title="View Finder">VF</abbr>像倍率計算機</h1>
+      </div>
+      <form role="form" data-ng-controller="FinderCalcCtrl" name="form">
+        <div class="alert alert-danger" data-ng-show="form.power.$invalid">
+          <p>倍率は0より大きい数値でないといけません</p>
+        </div>
+        <div class="form-group row" data-ng-class="{'has-error':form.power.$invalid,'has-feedback':form.power.$invalid}">
+          <label class="col-xs-3">倍率</label>
+          <div class="col-xs-9">
+            <input name="power" type="number" class="form-control" data-ng-model="power" min="0" required>
+            <span class="glyphicon glyphicon-remove form-control-feedback" data-ng-show="form.$invalid"></span>
+          </div>
+        </div>
+        <fieldset>
+          <legend>撮像面サイズ</legend>
+          <div class="radio">
+            <label>
+              <input type="radio" data-ng-model="sensorFormat" value="135">
+              135
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" data-ng-model="sensorFormat" value="aps-c">
+              APS-C
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" data-ng-model="sensorFormat" value="645">
+              中判
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>ビューファインダー像サイズ</legend>
+          <div class="row">
+            <div class="col-xs-5">
+              <div class="col-xs-5"><b>{{ sensorWidth * power | number:2 }}</b> mm</div>
+              <div class="col-xs-2">×</div>
+              <div class="col-xs-5"><b>{{ sensorHeight * power | number:2 }}</b> mm</div>
+            </div>
+            <div class="col-xs-2">=</div>
+            <div class="col-xs-5">
+              <b>{{ sensorWidth * power * sensorHeight * power | number:2 }}</b> mm<sup>2</sup>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>撮像面サイズ</legend>
+          <div class="row">
+            <div class="col-xs-5">
+              <div class="col-xs-5">{{ sensorWidth | number:2 }} mm</div>
+              <div class="col-xs-2">×</div>
+              <div class="col-xs-5">{{ sensorHeight | number:2 }} mm</div>
+            </div>
+            <div class="col-xs-2">=</div>
+            <div class="col-xs-5">
+              {{ sensorWidth * sensorHeight | number:2 }} mm<sup>2</sup>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
